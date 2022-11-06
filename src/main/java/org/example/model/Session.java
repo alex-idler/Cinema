@@ -22,7 +22,7 @@ public class Session {
 
     public String getInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return dateTime.format(formatter) + " " + movie.getInfo();
+        return "ID=" + id + " " + dateTime.format(formatter) + " " + movie.getInfo();
     }
 
     public Movie getMovie() {
@@ -47,5 +47,13 @@ public class Session {
 
     public void setTicketSet(Set<Ticket> ticketSet) {
         this.ticketSet = ticketSet;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -22,10 +22,10 @@ public class App {
 
         if(currentUser.getRole() == Role.ADMIN) {
             AdminServiceImp adminService = new AdminServiceImp();   //todo сменить на интерфейс
-            adminService.adminInterface();
+            adminService.adminInterface(currentUser);
         } else if(currentUser.getRole() == Role.USER) {
             UserServiceImp userService = new UserServiceImp();      //todo сменить на интерфейс
-            userService.userInterface();
+            userService.userInterface(currentUser);
         }
     }
 }

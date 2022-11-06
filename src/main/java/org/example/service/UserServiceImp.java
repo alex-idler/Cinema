@@ -2,35 +2,38 @@ package org.example.service;
 
 import org.example.model.Cinema;
 import org.example.model.Session;
+import org.example.model.User;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class UserServiceImp {
-    Cinema cinema = new Cinema();
 
-    public void userInterface() {
+    OrderServiceImp orderService = new OrderServiceImp(); //todo ----------- change to interface
+    public void userInterface(User currentUser) {
         Scanner in = new Scanner(System.in);
         String command = "";
-        System.out.println("exit - выход, list - список сеансов, order - купить билет");
+        orderService.printUserHelp();
         while (!(command = in.next().toLowerCase()).equals("exit")) {
             switch (command) {
                 case "help":
-                    System.out.println("exit - выход, list - список сеансов, order - купить билет");
+                    orderService.printUserHelp();
                     break;
                 case "list":
-                    List<Session> sessionList = cinema.getSessionList();
-                    for(Session session : sessionList) {
-                        System.out.println(session.getInfo());
-                    }
+                    orderService.printSessions();
+                    break;
+                case "tickets":
+                    orderService.printTickets(currentUser);
                     break;
                 case "order":
-                    System.out.println("pokupka bileta");
+                    orderService.buyTicket(currentUser);
                     break;
                 default:
-                    System.out.println("exit - выход, list - список сеансов, order - купить билет");
+                    orderService.printUserHelp();
             }
         }
         in.close();
     }
+
+
 }
