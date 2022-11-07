@@ -54,4 +54,26 @@ public class Movie {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Movie movie = (Movie) o;
+
+        if (id != movie.id) return false;
+        if (year != movie.year) return false;
+        if (!title.equals(movie.title)) return false;
+        return genre.equals(movie.genre);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + title.hashCode();
+        result = 31 * result + genre.hashCode();
+        result = 31 * result + year;
+        return result;
+    }
 }

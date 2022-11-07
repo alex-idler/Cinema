@@ -2,11 +2,7 @@ package org.example;
 
 import org.example.model.Role;
 import org.example.model.User;
-import org.example.service.AdminServiceImp;
-import org.example.service.LoginServiceImp;
-import org.example.service.OrderServiceImp;
-import org.example.service.UserServiceImp;
-
+import org.example.service.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,9 +14,8 @@ public class App {
         users.put("admin", new User("admin", "1", Role.ADMIN));
         users.put("user", new User("user", "1", Role.USER));
 
-        OrderServiceImp orderService = new OrderServiceImp();       //todo сменить на интерфейс
-        LoginServiceImp loginService = new LoginServiceImp();       //todo сменить на интерфейс
+        OrderService orderService = new OrderServiceImp();
+        LoginService loginService = new LoginServiceImp();
         loginService.login(users, orderService);
-
     }
 }

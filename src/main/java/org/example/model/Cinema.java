@@ -2,8 +2,8 @@ package org.example.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class Cinema {
     private List<Session> sessionList;
@@ -22,13 +22,13 @@ public class Cinema {
 
         sessionList = new ArrayList<>();
         sessionList.add(new Session(movieList.get(0), LocalDateTime.of(2022, 11, 10, 10, 20)));
-        sessionList.add(new Session(movieList.get(0), LocalDateTime.of(2022, 11, 10, 14, 00)));
-        sessionList.add(new Session(movieList.get(0), LocalDateTime.of(2022, 11, 10, 18, 00)));
+        sessionList.add(new Session(movieList.get(0), LocalDateTime.of(2022, 11, 10, 14, 0)));
+        sessionList.add(new Session(movieList.get(0), LocalDateTime.of(2022, 11, 10, 18, 0)));
         sessionList.add(new Session(movieList.get(1), LocalDateTime.of(2022, 11, 11, 9, 10)));
         sessionList.add(new Session(movieList.get(2), LocalDateTime.of(2022, 11, 11, 13, 40)));
-        sessionList.add(new Session(movieList.get(3), LocalDateTime.of(2022, 11, 11, 17, 00)));
+        sessionList.add(new Session(movieList.get(3), LocalDateTime.of(2022, 11, 11, 17, 0)));
         sessionList.add(new Session(movieList.get(4), LocalDateTime.of(2022, 11, 12, 10, 30)));
-        sessionList.add(new Session(movieList.get(4), LocalDateTime.of(2022, 11, 12, 14, 00)));
+        sessionList.add(new Session(movieList.get(4), LocalDateTime.of(2022, 11, 12, 14, 0)));
     }
 
     public List<Session> getSessionList() {
@@ -58,6 +58,9 @@ public class Cinema {
     }
 
     public void removeMovieById(int id) {
+        if(getMovieById(id) == null) {
+            return;
+        }
         removeSessionByMovieId(id);
         movieList.remove(getMovieById(id));
     }
@@ -71,16 +74,39 @@ public class Cinema {
     }
 
     public void removeSessionById(int id) {
+        if(getSessionById(id) == null) {
+            return;
+        }
         sessionList.remove(getSessionById(id));
     }
 
     public void removeSessionByMovieId(int movieId) {
-        Iterator<Session> it = sessionList.iterator();
-        while(it.hasNext()) {
-            Session session = it.next();
-            if(session.getMovie().getId() == movieId) {
-                it.remove();
-            }
-        }
+        sessionList.removeIf(session -> session.getMovie().getId() == movieId);
+    }
+
+    public void setSessionList(List<Session> sessionList) {
+        this.sessionList = sessionList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cinema cinema = (Cinema) o;
+
+        if (!Objects.equals(sessionList, cinema.sessionList)) return false;
+        return Objects.equals(movieList, cinema.movieList);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sessionList != null ? sessionList.hashCode() : 0;
+        result = 31 * result + (movieList != null ? movieList.hashCode() : 0);
+        return result;
     }
 }

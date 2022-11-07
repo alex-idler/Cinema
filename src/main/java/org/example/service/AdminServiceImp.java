@@ -1,14 +1,14 @@
 package org.example.service;
 
 import org.example.model.User;
-
-import java.util.Map;
 import java.util.Scanner;
 
-public class AdminServiceImp {
-    public boolean adminInterface(User currentUser, OrderServiceImp orderService) {   //todo interface
+public class AdminServiceImp implements AdminService {
+
+    @Override
+    public boolean adminInterface(User currentUser, OrderService orderService) {
         Scanner in = new Scanner(System.in);
-        String command = "";
+        String command;
         orderService.printAdminHelp();
         while (!(command = in.next().toLowerCase()).equals("exit")) {
             switch (command) {

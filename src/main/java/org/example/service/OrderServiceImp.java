@@ -1,14 +1,13 @@
 package org.example.service;
 
 import org.example.model.*;
-
 import java.time.DateTimeException;
 import java.util.List;
 import java.util.Scanner;
 
-public class OrderServiceImp {
+public class OrderServiceImp implements OrderService {
     private final Cinema cinema;
-    private Scanner in;
+    private final Scanner in;
 
     private final String USER_HELP_MESSAGE = "exit - выход из программы, list - список сеансов, order - купить билет, " +
             "tickets - информация о купленных билетах, cancel - возврат билета, logout - выход";
@@ -35,7 +34,7 @@ public class OrderServiceImp {
         cinema = new Cinema();
         in = new Scanner(System.in);
     }
-
+    @Override
     public void printSessions() {
         List<Session> sessionList = cinema.getSessionList();
         for(Session session : sessionList) {
@@ -43,14 +42,17 @@ public class OrderServiceImp {
         }
     }
 
+    @Override
     public void printUserHelp() {
         System.out.println(USER_HELP_MESSAGE);
     }
 
+    @Override
     public void printAdminHelp() {
         System.out.println(ADMIN_HELP_MESSAGE);
     }
 
+    @Override
     public void printTickets(User currentUser) {
         if(currentUser.getTicketList().isEmpty()) {
             System.out.println(PRINT_TICKETS_ERROR_MESSAGE);
@@ -61,6 +63,7 @@ public class OrderServiceImp {
         }
     }
 
+    @Override
     public void printAllTickets() {
         if(cinema.getSessionList().isEmpty()) {
             System.out.println(PRINT_ALL_TICKETS_ERROR_MESSAGE);
@@ -75,6 +78,7 @@ public class OrderServiceImp {
         }
     }
 
+    @Override
     public void printAllMovies() {
         if(cinema.getMovieList().isEmpty()) {
             System.out.println(PRINT_ALL_MOVIES_ERROR_MESSAGE);
@@ -85,10 +89,11 @@ public class OrderServiceImp {
         }
     }
 
+    @Override
     public void buyTicket(User currentUser) {
         printSessions();
         System.out.println(ORDER_MESSAGE);
-        String command = "";
+        String command;
         while (!(command = in.next().toLowerCase()).equals("exit")) {
             try {
                 Integer i = Integer.valueOf(command);
@@ -104,22 +109,24 @@ public class OrderServiceImp {
         }
     }
 
+    @Override
     public void cancelTicket(User currentUser) {
         printTickets(currentUser);
         System.out.println(CANCEL_MESSAGE);
-        String command = "";
+        String command;
         while (!(command = in.next().toLowerCase()).equals("exit")) {
             try {
                 Integer i = Integer.valueOf(command);
                 currentUser.getTicketList().remove( currentUser.getTicketById(i) );
                 printTickets(currentUser);
-                System.out.println(CANCEL_MESSAGE);
+                System.out.println(CANCEL_SUCCESS_MESSAGE);
             }catch (NumberFormatException e) {
                 System.out.println(CANCEL_MESSAGE);
             }
         }
     }
 
+    @Override
     public void addMovie() {
         System.out.println(ADD_MOVIE_MESSAGE);
         System.out.print("Название: ");
@@ -135,19 +142,19 @@ public class OrderServiceImp {
         }
     }
 
+    @Override
     public void removeMovie() {
         printAllMovies();
         System.out.println(REMOVE_MOVIE_MESSAGE);
         try {
-            Integer movieId = Integer.valueOf(in.next());
-            if(cinema.getMovieById(movieId) != null) {
-                cinema.removeMovieById(movieId);
-            }
+            Integer id = Integer.valueOf(in.next());
+            cinema.removeMovieById(id);
         }catch (NumberFormatException e) {
             System.out.println(REMOVE_MOVIE_ERROR_MESSAGE);
         }
     }
 
+    @Override
     public void addSession() {
         System.out.println(ADD_SESSION_MESSAGE);
         try {
@@ -162,10 +169,10 @@ public class OrderServiceImp {
             System.out.print("Минуты: ");
             Integer minutes = Integer.valueOf(in.next());
             System.out.print("ID фильма: ");
-            Integer movieId = Integer.valueOf(in.next());
+            Integer id = Integer.valueOf(in.next());
 
-            if(cinema.getMovieById(movieId) != null) {
-                cinema.addSession(movieId, year, month, day, hour, minutes);
+            if(cinema.getMovieById(id) != null) {
+                cinema.addSession(id, year, month, day, hour, minutes);
             } else {
                 System.out.println(ADD_SESSION_ERROR_MESSAGE);
             }
@@ -174,14 +181,13 @@ public class OrderServiceImp {
         }
     }
 
+    @Override
     public void removeSession() {
         printSessions();
         System.out.println(REMOVE_SESSION_MESSAGE);
         try {
-            Integer sessionId = Integer.valueOf(in.next());
-            if(cinema.getSessionById(sessionId) != null) {
-                cinema.removeSessionById(sessionId);
-            }
+            Integer id = Integer.valueOf(in.next());
+            cinema.removeSessionById(id);
         }catch (NumberFormatException e) {
             System.out.println(REMOVE_SESSION_ERROR_MESSAGE);
         }

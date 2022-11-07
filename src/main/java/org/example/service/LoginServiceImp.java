@@ -2,15 +2,15 @@ package org.example.service;
 
 import org.example.model.Role;
 import org.example.model.User;
-
 import java.util.Map;
 import java.util.Scanner;
 
-public class LoginServiceImp {
+public class LoginServiceImp implements LoginService {
     private final String ERROR_MESSAGE = "Неверные данные, повторите ввод";
-    public void login(Map<String, User> users, OrderServiceImp orderService) {   //todo interface
+
+    @Override
+    public void login(Map<String, User> users, OrderService orderService) {
         Scanner in = new Scanner(System.in);
-        String command = "";
         boolean isLogout = false;
         User currentUser = null;
         while (currentUser == null || isLogout) {
@@ -21,10 +21,10 @@ public class LoginServiceImp {
             if(users.get(login) != null && users.get(login).getPassword().equals(password)) {
                 currentUser = users.get(login);
                 if(currentUser.getRole() == Role.ADMIN) {
-                    AdminServiceImp adminService = new AdminServiceImp();   //todo сменить на интерфейс
+                    AdminService adminService = new AdminServiceImp();
                     isLogout = adminService.adminInterface(currentUser, orderService);
                 } else if(currentUser.getRole() == Role.USER) {
-                    UserServiceImp userService = new UserServiceImp();      //todo сменить на интерфейс
+                    UserService userService = new UserServiceImp();
                     isLogout = userService.userInterface(currentUser, orderService);
                 }
             } else {
