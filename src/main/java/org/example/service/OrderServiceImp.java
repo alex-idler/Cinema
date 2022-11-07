@@ -35,6 +35,7 @@ public class OrderServiceImp implements OrderService {
         cinema = new Cinema();
         in = new Scanner(System.in);
     }
+
     @Override
     public void printSessions() {
         List<Session> sessionList = cinema.getSessionList();
