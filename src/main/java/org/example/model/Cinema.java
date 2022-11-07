@@ -2,8 +2,8 @@ package org.example.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class Cinema {
     private List<Session> sessionList;
@@ -48,11 +48,39 @@ public class Cinema {
         return null;
     }
 
+    public Session getSessionById(int id) {
+        for(Session session : sessionList) {
+            if(session.getId() == id) {
+                return session;
+            }
+        }
+        return null;
+    }
+
+    public void removeMovieById(int id) {
+        removeSessionByMovieId(id);
+        movieList.remove(getMovieById(id));
+    }
+
     public void addMovie(String title, String genre, int year) {
         movieList.add(new Movie(title, genre, year));
     }
 
     public void addSession(int movieId, int year, int month, int day, int hour, int minute) {
         sessionList.add(new Session(getMovieById(movieId), LocalDateTime.of(year, month, day, hour, minute)));
+    }
+
+    public void removeSessionById(int id) {
+        sessionList.remove(getSessionById(id));
+    }
+
+    public void removeSessionByMovieId(int movieId) {
+        Iterator<Session> it = sessionList.iterator();
+        while(it.hasNext()) {
+            Session session = it.next();
+            if(session.getMovie().getId() == movieId) {
+                it.remove();
+            }
+        }
     }
 }

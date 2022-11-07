@@ -51,6 +51,15 @@ public class User {
         return ticketList;
     }
 
+    public Ticket getTicketById(int id) {
+        for(Ticket ticket : ticketList) {
+            if(ticket.getId() ==  id) {
+                return ticket;
+            }
+        }
+        return null;
+    }
+
     public void setTicketList(List<Ticket> ticketList) {
         this.ticketList = ticketList;
     }

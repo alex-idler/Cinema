@@ -25,6 +25,9 @@ public class UserServiceImp {
                 case "order":
                     orderService.buyTicket(currentUser);
                     break;
+                case "cancel":
+                    orderService.cancelTicket(currentUser);
+                    break;
                 case "logout":
                     return true;
             }

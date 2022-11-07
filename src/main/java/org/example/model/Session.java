@@ -22,7 +22,7 @@ public class Session {
 
     public String getInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return "ID=" + id + " " + dateTime.format(formatter) + " " + movie.getInfo();
+        return "Session id=" + id + " " + dateTime.format(formatter) + " " + movie.getInfo();
     }
 
     public void addTicket(Ticket ticket) {

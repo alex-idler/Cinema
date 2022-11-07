@@ -8,23 +8,32 @@ import java.util.Scanner;
 
 public class OrderServiceImp {
     private final Cinema cinema;
-    private final String USER_HELP_MESSAGE = "exit - выход, list - список сеансов, order - купить билет, " +
-            "tickets - информация о купленных билетах, logout - выход";
-    private final String ADMIN_HELP_MESSAGE = "exit - выход, list - список сеансов, movies - список фильмов, " +
-            "tickets - информация о проданных билетах, addmovie - добавление фильма, addsession - добавление сеанса, " +
-            "logout - выход";
+    private Scanner in;
+
+    private final String USER_HELP_MESSAGE = "exit - выход из программы, list - список сеансов, order - купить билет, " +
+            "tickets - информация о купленных билетах, cancel - возврат билета, logout - выход";
+    private final String ADMIN_HELP_MESSAGE = "exit - выход из программы, list - список сеансов, movies - список фильмов, " +
+            "tickets - информация о проданных билетах, am - добавление фильма, rm - удаление фильма, \n" +
+            "as - добавление сеанса, rs - удаление сеанса, logout - выход";
     private final String ORDER_MESSAGE = "Для покупки билета введите ID сеанса, 'exit' для отмены";
     private final String ORDER_SUCCESS_MESSAGE = "Билет оплачен. Для покупки ещё одного введите ID сеанса, 'exit' для выхода в меню";
+    private final String CANCEL_MESSAGE = "Для возврата билета введите ID сеанса, 'exit' для отмены";
+    private final String CANCEL_SUCCESS_MESSAGE = "Билет возвращён. Для возврата ещё одного введите ID сеанса, 'exit' для выхода в меню";
     private final String PRINT_TICKETS_ERROR_MESSAGE = "У Вас нет билетов";
     private final String PRINT_ALL_TICKETS_ERROR_MESSAGE = "Нет проданных билетов";
     private final String PRINT_ALL_MOVIES_ERROR_MESSAGE = "Нет фильмов";
     private final String ADD_MOVIE_MESSAGE = "Добавление фильма";
     private final String ADD_MOVIE_ERROR_MESSAGE = "Ошибка ввода данных";
+    private final String REMOVE_MOVIE_MESSAGE = "Для удаления фильма введите ID (будут удалены и сессии с этим фильмом)";
+    private final String REMOVE_MOVIE_ERROR_MESSAGE = "Ошибка ввода данных";
     private final String ADD_SESSION_MESSAGE = "Добавление сеанса, введите дату, время сеанса, ID фильма";
     private final String ADD_SESSION_ERROR_MESSAGE = "Ошибка ввода данных";
+    private final String REMOVE_SESSION_MESSAGE = "Для удаления сеанса введите ID";
+    private final String REMOVE_SESSION_ERROR_MESSAGE = "Ошибка ввода данных";
 
     public OrderServiceImp() {
         cinema = new Cinema();
+        in = new Scanner(System.in);
     }
 
     public void printSessions() {
@@ -48,7 +57,7 @@ public class OrderServiceImp {
             return;
         }
         for(Ticket ticket : currentUser.getTicketList()) {
-            System.out.println(ticket.getSession().getInfo());
+            System.out.println(ticket.getInfo());
         }
     }
 
@@ -79,7 +88,6 @@ public class OrderServiceImp {
     public void buyTicket(User currentUser) {
         printSessions();
         System.out.println(ORDER_MESSAGE);
-        Scanner in = new Scanner(System.in);
         String command = "";
         while (!(command = in.next().toLowerCase()).equals("exit")) {
             try {
@@ -96,9 +104,23 @@ public class OrderServiceImp {
         }
     }
 
-    public void addMovie() {
-        Scanner in = new Scanner(System.in);
+    public void cancelTicket(User currentUser) {
+        printTickets(currentUser);
+        System.out.println(CANCEL_MESSAGE);
+        String command = "";
+        while (!(command = in.next().toLowerCase()).equals("exit")) {
+            try {
+                Integer i = Integer.valueOf(command);
+                currentUser.getTicketList().remove( currentUser.getTicketById(i) );
+                printTickets(currentUser);
+                System.out.println(CANCEL_MESSAGE);
+            }catch (NumberFormatException e) {
+                System.out.println(CANCEL_MESSAGE);
+            }
+        }
+    }
 
+    public void addMovie() {
         System.out.println(ADD_MOVIE_MESSAGE);
         System.out.print("Название: ");
         String title = in.next();
@@ -113,9 +135,20 @@ public class OrderServiceImp {
         }
     }
 
-    public void addSession() {
-        Scanner in = new Scanner(System.in);
+    public void removeMovie() {
+        printAllMovies();
+        System.out.println(REMOVE_MOVIE_MESSAGE);
+        try {
+            Integer movieId = Integer.valueOf(in.next());
+            if(cinema.getMovieById(movieId) != null) {
+                cinema.removeMovieById(movieId);
+            }
+        }catch (NumberFormatException e) {
+            System.out.println(REMOVE_MOVIE_ERROR_MESSAGE);
+        }
+    }
 
+    public void addSession() {
         System.out.println(ADD_SESSION_MESSAGE);
         try {
             System.out.print("Год: ");
@@ -138,6 +171,19 @@ public class OrderServiceImp {
             }
         } catch (NumberFormatException | DateTimeException e) {
             System.out.println(ADD_SESSION_ERROR_MESSAGE);
+        }
+    }
+
+    public void removeSession() {
+        printSessions();
+        System.out.println(REMOVE_SESSION_MESSAGE);
+        try {
+            Integer sessionId = Integer.valueOf(in.next());
+            if(cinema.getSessionById(sessionId) != null) {
+                cinema.removeSessionById(sessionId);
+            }
+        }catch (NumberFormatException e) {
+            System.out.println(REMOVE_SESSION_ERROR_MESSAGE);
         }
     }
 }

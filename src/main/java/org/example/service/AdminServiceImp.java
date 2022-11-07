@@ -21,12 +21,17 @@ public class AdminServiceImp {
                 case "tickets":
                     orderService.printAllTickets();
                     break;
-                case "addmovie":
+                case "am":
                     orderService.addMovie();
                     break;
-                case "addsession":
+                case "rm":
+                    orderService.removeMovie();
+                    break;
+                case "as":
                     orderService.addSession();
                     break;
+                case "rs":
+                    orderService.removeSession();
                 case "logout":
                     return true;
             }
