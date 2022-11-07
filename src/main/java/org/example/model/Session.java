@@ -62,25 +62,4 @@ public class Session {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Session session = (Session) o;
-
-        if (id != session.id) return false;
-        if (!movie.equals(session.movie)) return false;
-        if (!dateTime.equals(session.dateTime)) return false;
-        return Objects.equals(ticketSet, session.ticketSet);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + movie.hashCode();
-        result = 31 * result + dateTime.hashCode();
-        result = 31 * result + (ticketSet != null ? ticketSet.hashCode() : 0);
-        return result;
-    }
 }

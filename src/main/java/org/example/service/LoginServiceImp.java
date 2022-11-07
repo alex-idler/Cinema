@@ -22,7 +22,7 @@ public class LoginServiceImp implements LoginService {
                 currentUser = users.get(login);
                 if(currentUser.getRole() == Role.ADMIN) {
                     AdminService adminService = new AdminServiceImp();
-                    isLogout = adminService.adminInterface(currentUser, orderService);
+                    isLogout = adminService.adminInterface(currentUser, orderService, users);
                 } else if(currentUser.getRole() == Role.USER) {
                     UserService userService = new UserServiceImp();
                     isLogout = userService.userInterface(currentUser, orderService);

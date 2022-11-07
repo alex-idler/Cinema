@@ -41,24 +41,4 @@ public class Ticket {
     public void setId(int id) {
         this.id = id;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Ticket ticket = (Ticket) o;
-
-        if (id != ticket.id) return false;
-        if (!owner.equals(ticket.owner)) return false;
-        return session.equals(ticket.session);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + owner.hashCode();
-        result = 31 * result + session.hashCode();
-        return result;
-    }
 }

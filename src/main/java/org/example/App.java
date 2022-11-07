@@ -9,7 +9,7 @@ import java.util.Map;
 public class App {
     public static void main(String[] args) {
 
-        System.out.println("-- Welcome to the Cinema --");
+        System.out.println("-- Welcome to the Cinema -- [login 'admin' pass '1' OR login 'user' pass '1']");
         Map<String, User> users = new HashMap<>();
         users.put("admin", new User("admin", "1", Role.ADMIN));
         users.put("user", new User("user", "1", Role.USER));

@@ -13,7 +13,8 @@ public class OrderServiceImp implements OrderService {
             "tickets - информация о купленных билетах, cancel - возврат билета, logout - выход";
     private final String ADMIN_HELP_MESSAGE = "exit - выход из программы, list - список сеансов, movies - список фильмов, " +
             "tickets - информация о проданных билетах, am - добавление фильма, rm - удаление фильма, \n" +
-            "as - добавление сеанса, rs - удаление сеанса, logout - выход";
+            "as - добавление сеанса, rs - удаление сеанса, au - добавление пользователя, ru - удаление пользователя, " +
+            "users - список пользователей, logout - выход";
     private final String ORDER_MESSAGE = "Для покупки билета введите ID сеанса, 'exit' для отмены";
     private final String ORDER_SUCCESS_MESSAGE = "Билет оплачен. Для покупки ещё одного введите ID сеанса, 'exit' для выхода в меню";
     private final String CANCEL_MESSAGE = "Для возврата билета введите ID сеанса, 'exit' для отмены";
@@ -137,7 +138,7 @@ public class OrderServiceImp implements OrderService {
         try {
             Integer year = Integer.valueOf(in.next());
             cinema.addMovie(title, genre, year);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println(ADD_MOVIE_ERROR_MESSAGE);
         }
     }
