@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class LoginServiceImp {
     private final String ERROR_MESSAGE = "Неверные данные, повторите ввод";
-    public void login(Map<String, User> users) {
+    public void login(Map<String, User> users, OrderServiceImp orderService) {   //todo interface
         Scanner in = new Scanner(System.in);
         String command = "";
         boolean isLogout = false;
@@ -22,14 +22,15 @@ public class LoginServiceImp {
                 currentUser = users.get(login);
                 if(currentUser.getRole() == Role.ADMIN) {
                     AdminServiceImp adminService = new AdminServiceImp();   //todo сменить на интерфейс
-                    isLogout = adminService.adminInterface(currentUser);
+                    isLogout = adminService.adminInterface(currentUser, orderService);
                 } else if(currentUser.getRole() == Role.USER) {
                     UserServiceImp userService = new UserServiceImp();      //todo сменить на интерфейс
-                    isLogout = userService.userInterface(currentUser);
+                    isLogout = userService.userInterface(currentUser, orderService);
                 }
             } else {
                 System.out.println(ERROR_MESSAGE);
             }
         }
+        in.close();
     }
 }

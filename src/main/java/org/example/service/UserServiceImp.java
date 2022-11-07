@@ -10,8 +10,7 @@ import java.util.Scanner;
 
 public class UserServiceImp {
 
-    OrderServiceImp orderService = new OrderServiceImp(); //todo ----------- change to interface
-    public boolean userInterface(User currentUser) {
+    public boolean userInterface(User currentUser, OrderServiceImp orderService) {  //todo interface
         Scanner in = new Scanner(System.in);
         String command = "";
         orderService.printUserHelp();
@@ -31,9 +30,6 @@ public class UserServiceImp {
             }
             orderService.printUserHelp();
         }
-        in.close();
         return false;
     }
-
-
 }

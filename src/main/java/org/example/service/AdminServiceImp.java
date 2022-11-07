@@ -6,9 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class AdminServiceImp {
-    public boolean adminInterface(User currentUser) {
-
-        OrderServiceImp orderService = new OrderServiceImp();
+    public boolean adminInterface(User currentUser, OrderServiceImp orderService) {   //todo interface
         Scanner in = new Scanner(System.in);
         String command = "";
         orderService.printAdminHelp();
@@ -17,15 +15,20 @@ public class AdminServiceImp {
                 case "list":
                     orderService.printSessions();
                     break;
+                case "movies":
+                    orderService.printAllMovies();
+                    break;
                 case "tickets":
                     orderService.printAllTickets();
+                    break;
+                case "addmovie":
+                    orderService.addMovie();
                     break;
                 case "logout":
                     return true;
             }
             orderService.printAdminHelp();
         }
-        in.close();
         return false;
     }
 }

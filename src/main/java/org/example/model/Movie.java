@@ -1,6 +1,9 @@
 package org.example.model;
 
 public class Movie {
+    private static int moviesCount = 0;
+
+    private int id;
     private String title;
     private String genre;
     private int year;
@@ -9,10 +12,15 @@ public class Movie {
         this.title = title;
         this.genre = genre;
         this.year = year;
+        this.id = moviesCount++;
     }
 
     public String getInfo() {
         return title + " (жанр: " + genre + ", " + year + ")";
+    }
+
+    public String getInfoWithId() {
+        return "ID=" + id + " " + title + " (жанр: " + genre + ", " + year + ")";
     }
 
     public String getTitle() {
@@ -37,5 +45,13 @@ public class Movie {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

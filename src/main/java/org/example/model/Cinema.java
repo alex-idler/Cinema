@@ -7,13 +7,13 @@ import java.util.Set;
 
 public class Cinema {
     private List<Session> sessionList;
-
+    private List<Movie> movieList;
     public Cinema() {
         initialize();
     }
 
     private void initialize() {
-        List<Movie> movieList = new ArrayList<>();
+        movieList = new ArrayList<>();
         movieList.add(new Movie("Avatar", "Adventure", 2009));
         movieList.add(new Movie("The Lord of the Rings", "Adventure", 2001));
         movieList.add(new Movie("Groundhog Day", "Comedy", 1993));
@@ -34,4 +34,14 @@ public class Cinema {
     public List<Session> getSessionList() {
         return sessionList;
     }
+
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void addMovie(String title, String genre, int year) {
+        movieList.add(new Movie(title, genre, year));
+    }
+
+
 }
