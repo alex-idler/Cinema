@@ -2,26 +2,30 @@ package org.example.service;
 
 import org.example.model.User;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class AdminServiceImp {
-    public void adminInterface(User currentUser) {
+    public boolean adminInterface(User currentUser) {
 
+        OrderServiceImp orderService = new OrderServiceImp();
         Scanner in = new Scanner(System.in);
         String command = "";
-        System.out.println("exit - выход, list - список сеансов");
-        while (!(command = in.nextLine().toLowerCase()).equals("exit")) {
+        orderService.printAdminHelp();
+        while (!(command = in.next().toLowerCase()).equals("exit")) {
             switch (command) {
                 case "list":
-                    System.out.println("tut budet spisok filmov");
+                    orderService.printSessions();
                     break;
-                case "order":
-                    System.out.println("pokupka bileta");
+                case "tickets":
+                    orderService.printAllTickets();
                     break;
-                default:
-                    System.out.println("exit - выход, list - список сеансов, order - купить билет");
+                case "logout":
+                    return true;
             }
+            orderService.printAdminHelp();
         }
         in.close();
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package org.example.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -15,6 +16,7 @@ public class User {
         this.password = password;
         this.name = name;
         this.role = role;
+        this.ticketList = new ArrayList<>();
     }
 
     public void addTicket(Ticket ticket) {

@@ -25,6 +25,10 @@ public class Session {
         return "ID=" + id + " " + dateTime.format(formatter) + " " + movie.getInfo();
     }
 
+    public void addTicket(Ticket ticket) {
+        ticketSet.add(ticket);
+    }
+
     public Movie getMovie() {
         return movie;
     }

@@ -5,20 +5,18 @@ import org.example.model.Session;
 import org.example.model.User;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UserServiceImp {
 
     OrderServiceImp orderService = new OrderServiceImp(); //todo ----------- change to interface
-    public void userInterface(User currentUser) {
+    public boolean userInterface(User currentUser) {
         Scanner in = new Scanner(System.in);
         String command = "";
         orderService.printUserHelp();
         while (!(command = in.next().toLowerCase()).equals("exit")) {
             switch (command) {
-                case "help":
-                    orderService.printUserHelp();
-                    break;
                 case "list":
                     orderService.printSessions();
                     break;
@@ -28,11 +26,13 @@ public class UserServiceImp {
                 case "order":
                     orderService.buyTicket(currentUser);
                     break;
-                default:
-                    orderService.printUserHelp();
+                case "logout":
+                    return true;
             }
+            orderService.printUserHelp();
         }
         in.close();
+        return false;
     }
 
 

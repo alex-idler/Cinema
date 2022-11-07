@@ -7,6 +7,11 @@ public class Ticket {
     public Ticket(User owner, Session session) {
         this.owner = owner;
         this.session = session;
+        session.addTicket(this);
+    }
+
+    public String getInfo() {
+        return session.getInfo() + " " + owner.getName();
     }
 
     public User getOwner() {
