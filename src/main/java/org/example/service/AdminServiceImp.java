@@ -24,6 +24,9 @@ public class AdminServiceImp {
                 case "addmovie":
                     orderService.addMovie();
                     break;
+                case "addsession":
+                    orderService.addSession();
+                    break;
                 case "logout":
                     return true;
             }

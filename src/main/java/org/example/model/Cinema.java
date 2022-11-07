@@ -39,9 +39,20 @@ public class Cinema {
         return movieList;
     }
 
+    public Movie getMovieById(int id) {
+        for(Movie movie : movieList) {
+            if(movie.getId() == id) {
+                return movie;
+            }
+        }
+        return null;
+    }
+
     public void addMovie(String title, String genre, int year) {
         movieList.add(new Movie(title, genre, year));
     }
 
-
+    public void addSession(int movieId, int year, int month, int day, int hour, int minute) {
+        sessionList.add(new Session(getMovieById(movieId), LocalDateTime.of(year, month, day, hour, minute)));
+    }
 }
